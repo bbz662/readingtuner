@@ -177,7 +177,7 @@ const messagesFromReactAppListener = (
       } else {
          processedText = await processText(container.innerHTML, msg);
       }
-      console.log(processedText);
+      // console.log(processedText);
 
       if (!selection.isCollapsed) { // 選択範囲が存在するか確認
          const range = selection.getRangeAt(0); // 最初のRangeオブジェクトを取得
