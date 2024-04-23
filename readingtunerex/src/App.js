@@ -3,10 +3,11 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 
 function App() {
-  const [age, setAge] = useState(8);
+  const [age, setAge] = useState(18);
   const [apiKey, setApiKey] = useState('');
-  const [model, setModel] = useState('gpt3.5');
+  const [model, setModel] = useState('gpt-3.5-turbo');
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [job, setJob] = useState('sales');  // 初期値は空文字列やデフォルトの職種
 
   // Load API key from storage
   useEffect(() => {
@@ -17,6 +18,7 @@ function App() {
       if (result.model) {
         setModel(result.model);
       }
+      if (result.job) setJob(result.job);
     });
   }, []);
 
@@ -50,6 +52,7 @@ function App() {
           model,
           age,
           commit,
+          job,
         },
         (response) => {
           console.log("received response");
@@ -68,8 +71,8 @@ function App() {
         Age:
         <input
           type="range"
-          min="4"
-          max="18"
+          min="16"
+          max="100"
           value={age}
           onChange={(e) => setAge(e.target.value)}
         />
@@ -77,6 +80,19 @@ function App() {
           {age}
         </div>
       </label>
+      <label>
+        Job:
+        <select value={job} onChange={(e) => setJob(e.target.value)}>
+          <option value="">Select your job</option>
+          <option value="student">Student</option>
+          <option value="sales">Sales</option>
+          <option value="engineer">Engineer</option>
+          <option value="designer">Designer</option>
+          <option value="hr">HR</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
       <button onClick={simplifyAndCommit}>Tune! ({model})</button>
       <div>
         <button onClick={() => setShowAdvanced(!showAdvanced)}>
